@@ -53,7 +53,7 @@ void loop() {
 
   /*  Formato: char-int-int-char-int-int-int-int
    *  Los char indican direccion
-   *  Los int indican velocidad 
+   *  Los int indican velocidad
    *  Los 2 ultimos int controlan los servos
    */
   if(stringComplete) {  // Mensaje desde serial

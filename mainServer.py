@@ -1,15 +1,12 @@
 """Imports"""
 import gc
-import serial
+import socket
 from evdev import InputDevice
 
 
 def main():
-    """Checks PS3 inputs and sends them via serial to arduino"""
+    """Checks PS3 inputs and sends them via UDP"""
     dev = InputDevice('/dev/input/by-id/usb-Sony_PLAYSTATION_R_3_Controller-event-joystick')
-    # ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=0.1)
-    # ser = serial.Serial('/dev/ttyUSB0', 19200)
-    ser = serial.Serial('/dev/rfcomm1', 19200)
     speed1 = 0
     speed2 = 0
     dir1 = 'F'
@@ -23,6 +20,11 @@ def main():
 
     print(dev)
     print(dev.capabilities(verbose=True, absinfo=False))
+
+    UDP_IP = "127.0.0.1"
+    UDP_PORT = 5000
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     while True:
         event = dev.read()
@@ -96,17 +98,12 @@ def main():
                         s2bpress2 = True
                 elif s2bpress2:
                     servo2 -= 0.5
-            print(dir1 +
-                  str(abs(speed1 * 2)).zfill(3) +
-                  dir2 +
-                  str(abs(speed2 * 2)).zfill(3))
-            ser.write(dir1.encode() +
-                      str(abs(speed1 * 2)).zfill(3).encode() +
-                      dir2.encode() +
-                      str(abs(speed2 * 2)).zfill(3).encode() +
-                      str(int(servo1)).zfill(3).encode() +
-                      str(int(servo2)).zfill(3).encode() + "\n".encode())
-            # time.sleep(0.4)
+            sock.sendTo(dir1.encode() +
+                        str(abs(speed1 * 2)).zfill(3).encode() +
+                        dir2.encode() +
+                        str(abs(speed2 * 2)).zfill(3).encode() +
+                        str(int(servo1)).zfill(3).encode() +
+                        str(int(servo2)).zfill(3).encode() + "\n".encode(), (UDP_IP, UDP_PORT))
             gc.collect()
         except IOError:
             pass
