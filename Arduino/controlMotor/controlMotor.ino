@@ -8,16 +8,12 @@ String s1 = "";
 String s2 = "";
 String st = "";
 boolean stringComplete = false;
-int pwmM1 = 6;
-int M11 = 7;
-int M12 = 8;
-int pwmM2 = 5;
-int M21 = 4;
-int M22 = 3;
-String ang1 = "";
-String ang2 = "";
-Servo servo1;
-Servo servo2;
+int pwmM1 = 12;
+int M11 = 22;
+int M12 = 23;
+int pwmM2 = 13;
+int M21 = 24;
+int M22 = 25;
 
 void setup() {
   // put your setup code here, to run once:
@@ -27,8 +23,6 @@ void setup() {
   pinMode(pwmM2, OUTPUT);
   pinMode(M21, OUTPUT);
   pinMode(M22, OUTPUT);
-  servo1.attach(9);
-  servo2.attach(10);
   Serial.begin(19200);
   st.reserve(20);
 }
@@ -71,18 +65,6 @@ void loop() {
     analogWrite(pwmM1, speed1);
     speed2 = atoi(s2.c_str());
     analogWrite(pwmM2, speed2);
-    ang1 = "";
-    ang1 += st[8];
-    ang1 += st[9];
-    ang1 += st[10];
-    int ang = atoi(ang1.c_str());
-    servo1.write(ang);
-    ang2 = "";
-    ang2 += st[11];
-    ang2 += st[12];
-    ang2 += st[13];
-    ang = atoi(ang2.c_str());
-    servo2.write(ang);
     st = "";
     stringComplete = false;
   }

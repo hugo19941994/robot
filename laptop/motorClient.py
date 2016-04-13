@@ -21,7 +21,7 @@ def main():
     print(dev)
     print(dev.capabilities(verbose=True, absinfo=False))
 
-    UDP_IP = "127.0.0.1"
+    UDP_IP = "192.168.0.249"
     UDP_PORT = 5000
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -98,7 +98,7 @@ def main():
                         s2bpress2 = True
                 elif s2bpress2:
                     servo2 -= 0.5
-            sock.sendTo(dir1.encode() +
+            sock.sendto(dir1.encode() +
                         str(abs(speed1 * 2)).zfill(3).encode() +
                         dir2.encode() +
                         str(abs(speed2 * 2)).zfill(3).encode() +
