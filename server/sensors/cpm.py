@@ -2,7 +2,7 @@ import serial
 import time
 
 def main():
-    ser = serial.Serial('/dev/ttyUSB0', 9600)
+    ser = serial.Serial('/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A104OWAZ-if00-port0', 9600)
     clear_buffer = time.time() + 60
     buffer = ''
     while True:
@@ -14,3 +14,4 @@ def main():
         print(buffer)
 
 main()
+

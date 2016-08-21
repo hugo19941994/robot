@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     ser = serial.Serial(
         '/dev/serial/by-id/'
-        'usb-Arduino__www.arduino.org__Arduino_Due_Prog._Port_8543833323635131F042-if00',
+	'usb-Arduino__www.arduino.org__Arduino_Due_Prog._Port_5543130393735101B2C1-if00',
         115200)
     i = 0
 
@@ -36,9 +36,9 @@ if __name__ == '__main__':
                     camera_image_array[idx] = "8000"
             cam3 = camera_image_array.astype(np.int)
             for idx, data in enumerate(cam3):
-                if data > 8500 or data < 7800:
+                if data > 9100 or data < 7600:
                     cam3[idx] = 8000
-            m = interp1d([7800, 8500], [0, 1])
+            m = interp1d([7600, 9100], [0, 1])
             if cam3.size > 4800:
                 cam3 = cam3[:-(4800-cam3.size)]
             cam4 = np.reshape(cam3, (60, 80))
@@ -48,7 +48,7 @@ if __name__ == '__main__':
             img = toimage(cam5)
             img = img.resize((800, 600))
             plt.figure(frameon=False)
-            plt.imshow(img)
-            plt.savefig('/home/hfs/img2.jpg')
-            #img.save('/home/hfs/img.jpg', 'JPEG')
+            #plt.imshow(img)
+            plt.savefig('/home/uem/img2.jpg')
+            img.save('/home/uem/img.jpg', 'JPEG')
             i = i + 1

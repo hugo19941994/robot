@@ -13,11 +13,12 @@ def main():
     dir1 = 'F'
     dir2 = 'F'
     dir3 = 'F'
+    arm_pos = 0
 
     print(dev)
     print(dev.capabilities(verbose=True, absinfo=False))
 
-    UDP_IP = "192.168.0.249"
+    UDP_IP = "192.168.43.2"
     UDP_PORT = 5000
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -25,7 +26,21 @@ def main():
     while True:
         event = dev.read()
         keys = dev.active_keys()
+        print(keys)
         try:
+            for key in keys:
+                if key == 295:
+                    arm_pos = 0
+                    print("295")
+                if key == 292:
+                    arm_pos = 1
+                    print("292")
+                if key == 293:
+                    arm_pos = 2
+                    print("293")
+                if key == 294:
+                    arm_pos = 3
+                    print("294")
             for evn in event:
                 if evn.code == 1:  # right x
                     # print(ev)
@@ -64,15 +79,13 @@ def main():
                     dir3 = 'B'
                 elif evn.code == 301:
                     speed3 = 0
-            for key in keys:
-                ##pepep
             sock.sendto(dir1.encode() +
                         str(abs(speed1 * 2)).zfill(3).encode() +
                         dir2.encode() +
                         str(abs(speed2 * 2)).zfill(3).encode() +
                         dir3.encode() +
                         str(abs(speed3 * 2)).zfill(3).encode() +
-                        str(0).encode() +
+                        # str(arm_pos).encode() +
                         "\n".encode(), (UDP_IP, UDP_PORT))
             gc.collect()
         except IOError:
