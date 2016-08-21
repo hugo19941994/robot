@@ -24,6 +24,7 @@ def main():
 
     while True:
         event = dev.read()
+        keys = dev.active_keys()
         try:
             for evn in event:
                 if evn.code == 1:  # right x
@@ -63,6 +64,8 @@ def main():
                     dir3 = 'B'
                 elif evn.code == 301:
                     speed3 = 0
+            for key in keys:
+                ##pepep
             sock.sendto(dir1.encode() +
                         str(abs(speed1 * 2)).zfill(3).encode() +
                         dir2.encode() +
