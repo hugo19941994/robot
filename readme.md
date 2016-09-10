@@ -8,7 +8,7 @@
 ## Hardware
 * Mini-ITX Skylake based PC
 * Arduino Due
-* Adrduino Mega
+* Arduino Mega
 * FLiR Lepton
 * Microsoft Kinect v1
 
